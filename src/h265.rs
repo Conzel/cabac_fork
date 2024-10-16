@@ -42,7 +42,7 @@ const NEXT_STATE_LPS: [u8; 128] = [
     77, 76, 77, 126, 127,
 ];
 
-const LPST_TABLE: [[u8; 4]; 64] = [
+pub const LPST_TABLE: [[u8; 4]; 64] = [
     [128, 176, 208, 240],
     [128, 167, 197, 227],
     [128, 158, 187, 216],
@@ -120,17 +120,17 @@ pub struct H265Context {
 }
 
 impl H265Context {
-    fn get_state(&self) -> u8 {
+    pub fn get_state(&self) -> u8 {
         self.uc_state >> 1
     }
 
-    fn get_mps(&self) -> bool {
+    pub fn get_mps(&self) -> bool {
         (self.uc_state & 1) == 1
     }
-    fn update_lps(&mut self) {
+    pub fn update_lps(&mut self) {
         self.uc_state = NEXT_STATE_LPS[usize::from(self.uc_state)];
     }
-    fn update_mps(&mut self) {
+    pub fn update_mps(&mut self) {
         self.uc_state = NEXT_STATE_MPS[usize::from(self.uc_state)];
     }
 }
